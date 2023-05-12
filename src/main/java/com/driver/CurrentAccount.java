@@ -1,21 +1,21 @@
 package com.driver;
 
+import static java.lang.String.valueOf;
+
 public class CurrentAccount extends BankAccount{
     String tradeLicenseId; //consists of Uppercase English characters only
-    public static int minBalance = 5000;
 
     public String getTradeLicenseId() {
         return tradeLicenseId;
     }
 
     public CurrentAccount(String name, double balance, String tradeLicenseId) throws Exception {
-        super(name, balance, minBalance);
-        if(minBalance > balance){
+        // minimum balance is 5000 by default. If balance is less than 5000, throw "Insufficient Balance" exception
+        super(name, balance, 5000);
+        this.tradeLicenseId = tradeLicenseId;
+        if(balance < 5000){
             throw new Exception("Insufficient Balance");
         }
-        this.tradeLicenseId = tradeLicenseId;
-        validateLicenseId();
-        // minimum balance is 5000 by default. If balance is less than 5000, throw "Insufficient Balance" exception
 
     }
 
@@ -24,6 +24,7 @@ public class CurrentAccount extends BankAccount{
         // If the license Id is valid, do nothing
         // If the characters of the license Id can be rearranged to create any valid license Id
         // If it is not possible, throw "Valid License can not be generated" Exception
+
         if(!isNumberValid(tradeLicenseId)){
             String rearrangedId = arrangeString(tradeLicenseId);
             if(rearrangedId == ""){
@@ -34,6 +35,7 @@ public class CurrentAccount extends BankAccount{
         }
     }
 
+
     public boolean isNumberValid(String licenseId){
         for(int i=0; i<licenseId.length()-1; i++){
             if(licenseId.charAt(i) == licenseId.charAt(i+1)){
@@ -42,6 +44,7 @@ public class CurrentAccount extends BankAccount{
         }
         return true;
     }
+
 
     public String arrangeString(String s){
         int n = s.length();
@@ -60,6 +63,31 @@ public class CurrentAccount extends BankAccount{
         if(maxCount > (n+1)/2){
             return "";
         }
+
+//        int index = 0;
+//        char[]res = new char[n];
+//        for(index=0;index<n;index=index+2){
+//            if(count[maxCount]>0){
+//                res[index] = ch_max;
+//                count[maxCount]--;
+//            }else{
+//                break;
+//            }
+//        }
+//
+//        for(int i=0;i<26;i++){
+//            char ch = (char)('A' + i);
+//            while(count[i] > 0){
+//                if(index>n){
+//                    index = 1;
+//                }
+//                res[index] = ch;
+//                index = index + 2;
+//                count[i]--;
+//            }
+//        }
+//        String ans = valueOf(res);
+//        return ans;
 
         String res = "";
         for (int i = 0; i < n; i++) {
@@ -87,6 +115,7 @@ public class CurrentAccount extends BankAccount{
         return res;
     }
 
+
     public char getCountChar(int[] count){
         int max = 0;
         char ch = 0;
@@ -98,4 +127,5 @@ public class CurrentAccount extends BankAccount{
         }
         return ch;
     }
+
 }
