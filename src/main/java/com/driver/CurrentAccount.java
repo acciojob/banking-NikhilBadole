@@ -4,6 +4,10 @@ public class CurrentAccount extends BankAccount{
     String tradeLicenseId; //consists of Uppercase English characters only
     public static int minBalance = 5000;
 
+    public String getTradeLicenseId() {
+        return tradeLicenseId;
+    }
+
     public CurrentAccount(String name, double balance, String tradeLicenseId) throws Exception {
         super(name, balance, minBalance);
         if(minBalance > balance){
